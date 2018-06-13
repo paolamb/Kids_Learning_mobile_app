@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<meta name="author" content="Paola Martinez Bautista">
+	<meta name="description" content=" Choose number kids challenge!">
+	<meta name="keywords" content="Choose number, kids challenge, color numbers, JavaScript, CSS3, HTML5">
+
+	<title>Numbers Kids Challenge!</title>
+	<link rel="stylesheet" href="www/number.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="row">
+		<div class="col-full instructions">
+			<h1> Choose the correct number</h1>
+			<h2>Your score is
+				<span id="score">0</span>/10</h2>
+		</div>
+	</div>
+
+	<div class="row">
+		<div id="dropzone-holder" class="col-half ">
+			<div class="col-quarter hitbox">
+				<img id="question" class="answer hide" src="www/img/correct-green.png" />
+				<div id="dropzone-number3" class="dropzone" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop(event)">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-half hitbox">
+			<div id="dropzone-container" class="dropzone container" ondragenter="return enter(event)" ondragover="return over(event)"
+			 ondrop="return drop(event)">
+				<img id="icon-number1" class="icon" onclick="imgClic('icon-number1','number1')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/number1.png">
+				<img id="icon-number7" class="icon" onclick="imgClic('icon-number7','number7')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/number7.png">
+				<img id="icon-number4" class="icon" onclick="imgClic('icon-number4' ,'number4')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/number4.png">
+				<img id="icon-number10" class="icon" onclick="imgClic('icon-number10','number10')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/number10.png">
+				<img id="icon-number5" class="icon" onclick="imgClic('icon-number5','number5')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/number5.png">
+				<img id="icon-number3" onclick="imgClic('icon-number3','number3')" class="icon" src="www/img/number3.png">
+				<img id="icon-number9" class="icon" onclick="imgClic('icon-number9','number9')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/number9.png">
+				<img id="icon-number6" onclick="imgClic('icon-number6','number6')" class="icon" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/number6.png">
+				<img id="icon-number8" onclick="imgClic('icon-number8','number8')" class="icon" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/number8.png">
+				<img id="icon-number2" onclick="imgClic('icon-number2','number2')" class="icon" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/number2.png">
+
+			</div>
+		</div>
+	</div>
+<!-- The Modal -->
+
+<div id="myModal" class="modal">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<h2 style="text-align:center">Game Over!</h2>
+		
+		<h3 style="text-align:center">Your score is
+			<span id="Modelscore">0</span>/10.
+		</h3>
+
+		<a href="index.html">
+			<input type="submit" id="btnHome" value="Home" />
+		</a>
+
+		<a href="number.html">
+			<input type="submit" id="btnrefresh" value="Refresh" />
+		</a>
+	</div>
+
+</div>
+	<script type="text/javascript">
+		var i = 0;
+		var score = document.getElementById('score');
+		var Modelscore = document.getElementById('Modelscore');
+		var modal = document.getElementById('myModal');
+		var btn = document.getElementById("myBtn");
+
+		var span = document.getElementsByClassName("close")[0];
+			function mybtnclick() {
+			modal.style.display = "block";
+		}
+
+		span.onclick = function () {
+			modal.style.display = "none";
+		}
+
+		window.onclick = function (event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+		$(document).ready(function () {
+			$('#next').click(function () {
+				$('#dropzone-number3').css("background-image", "url('" + numbers[i].iconNumber + "')");
+			})
+		});
+
+		function imgClic(id, nombre) {
+
+			if (nombre == numbers[i].name) {
+				$('#dropzone-number3').css("background-image", "url('" + numbers[i].inconBackNumber + "')");
+				$('#question').attr("src", "www/img/correct-green.png");
+				$('#question').attr('class', "answer show");
+				$('#' + id).attr('class', "icon answer hide");
+				vibrar();
+				sumariten();
+				if (i < 9) {
+					SigNumero = setTimeout(siguienteNumero, 2000);
+				}
+				else {
+					mybtnclick();
+
+				}
+			}
+			else {
+
+				$('#question').attr("src", "www/img/wrong-red.png");
+				$('#question').attr('class', "answer show");
+				if (i < 9) {
+					SigNumero = setTimeout(siguienteNumero, 2000);
+				}
+				else {
+					mybtnclick();
+				}
+			}
+		}
+
+		function siguienteNumero() {
+
+			i++;
+			$('#dropzone-number3').css("background-image", "url('" + numbers[i].iconNumber + "')");
+			$('#question').attr('class', "answer hide");
+
+		}
+
+		$('#next').click(function () {
+
+		})
+
+
+		function sumariten() {
+			score.innerHTML = parseInt(score.innerHTML) + 1;
+			Modelscore.innerHTML = parseInt(Modelscore.innerHTML) + 1;
+		}
+
+		var start = function (e) {
+			e.dataTransfer.effectAllowed = 'move';
+			e.dataTransfer.setData('iconId', e.target.id);
+			e.dataTransfer.setDragImage(e.target, 0, 0);
+			return true;
+		}
+		var numbers = [
+			{ name: "number3", iconNumber: "www/img/number3-bg.png", inconBackNumber: "www/img/number3.png" },
+			{ name: "number5", iconNumber: "www/img/number5-bg.png", inconBackNumber: "www/img/number5.png" },
+            { name: "number1", iconNumber: "www/img/number1-bg.png", inconBackNumber: "www/img/number1.png" },
+			{ name: "number8", iconNumber: "www/img/number8-bg.png", inconBackNumber: "www/img/number8.png" },
+			{ name: "number10", iconNumber: "www/img/number10-bg.png", inconBackNumber: "www/img/number10.png" },
+			{ name: "number7", iconNumber: "www/img/number7-bg.png", inconBackNumber: "www/img/number7.png" },
+			{ name: "number4", iconNumber: "www/img/number4-bg.png", inconBackNumber: "www/img/number4.png" },
+			{ name: "number6", iconNumber: "www/img/number6-bg.png", inconBackNumber: "www/img/number6.png" },
+			{ name: "number2", iconNumber: "www/img/number2-bg.png", inconBackNumber: "www/img/number2.png" },
+			{ name: "number9", iconNumber: "www/img/number9-bg.png", inconBackNumber: "www/img/number9.png" }
+		];
+		var enter = function (e) {
+			return true;
+		}
+		function vibrar() {
+			navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+			if (navigator.vibrate) {
+				navigator.vibrate(1000);
+			} else {
+				alert('Tu navegador no soporta la api de vibración HTML5');
+			}
+
+		}
+	</script>
+</body>
+
+</html>

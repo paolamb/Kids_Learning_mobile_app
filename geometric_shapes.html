@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<meta name="author" content="Paola Martinez Bautista">
+	<meta name="description" content=" Choose geometric shapes kids challenge!">
+	<meta name="keywords" content="Choose shapes, kids challenge, Geometric Shapes, JavaScript, CSS3, HTML5">
+
+	<title>Geometric shapes Kids Challenge!</title>
+	<link rel="stylesheet" href="www/geometric_shapes.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!--script src="https://code.jquery.com/ui/3.3.1/jquery-ui.js"></script-->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="row">
+		<div class="col-full instructions">
+			<h1> Choose the correct shape </h1>
+			<h2>Your score is
+				<span id="score">0</span>/10</h2>
+		</div>
+	</div>
+
+	<div class="row">
+		<div id="dropzone-holder" class="col-half ">
+			<div class="col-quarter hitbox">
+				<img id="question" class="answer hide" src="www/img/correct-green.png" />
+				<div id="dropzone-rectangle" class="dropzone" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop(event)">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-half hitbox">
+			<div id="dropzone-container" class="dropzone container" ondragenter="return enter(event)" ondragover="return over(event)"
+			 ondrop="return drop(event)">
+				<img id="icon-square" class="icon" onclick="imgClic('icon-square','square')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/square.png">
+				<img id="icon-circle" class="icon" onclick="imgClic('icon-circle','circle')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/circle.png">
+				<img id="icon-diamond" class="icon" onclick="imgClic('icon-diamond' ,'diamond')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/diamond.png">
+				<img id="icon-star" class="icon" onclick="imgClic('icon-star','star')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/star.png">
+				<img id="icon-triangle" class="icon" onclick="imgClic('icon-triangle','triangle')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/triangle.png">
+				<img id="icon-rectangle" onclick="imgClic('icon-rectangle','rectangle')" class="icon" src="www/img/rectangle.png">
+				<img id="icon-oval" class="icon" onclick="imgClic('icon-oval','oval')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/oval.png">
+				<img id="icon-pentagon" onclick="imgClic('icon-pentagon','pentagon')" class="icon" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/pentagon.png">
+				<img id="icon-hexagon" onclick="imgClic('icon-hexagon','hexagon')" class="icon" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/hexagon.png">
+				<img id="icon-heart" onclick="imgClic('icon-heart','heart')" class="icon" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/heart.png">
+
+			</div>
+		</div>
+	</div>
+	<!-- The Modal -->
+
+	<div id="myModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h2 style="text-align:center">Game Over!</h2>
+			
+			<h3 style="text-align:center">Your score is
+				<span id="Modelscore">0</span>/10.
+			</h3>
+
+			<a href="index.html">
+				<input type="submit" id="btnHome" value="Home" />
+			</a>
+
+			<a href="geometric_shapes.html">
+				<input type="submit" id="btnrefresh" value="Refresh" />
+			</a>
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+		var i = 0;
+		var score = document.getElementById('score');
+		var Modelscore = document.getElementById('Modelscore');
+		var modal = document.getElementById('myModal');
+		var btn = document.getElementById("myBtn");
+
+		var span = document.getElementsByClassName("close")[0];
+			function mybtnclick() {
+			modal.style.display = "block";
+		}
+
+		span.onclick = function () {
+			modal.style.display = "none";
+		}
+
+		window.onclick = function (event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+		$(document).ready(function () {
+			$('#next').click(function () {
+				$('#dropzone-rectangle').css("background-image", "url('" + shape[i].iconShape + "')");
+			})
+		});
+
+		function imgClic(id, nombre) {
+
+			if (nombre == shape[i].name) {
+				$('#dropzone-rectangle').css("background-image", "url('" + shape[i].inconBackShape + "')");
+				$('#question').attr("src", "www/img/correct-green.png");
+				$('#question').attr('class', "answer show");
+				$('#' + id).attr('class', "icon answer hide");
+				vibrar();
+				sumariten();
+				if (i < 9) {
+					SigShape = setTimeout(siguienteShape, 2000);
+				}
+				else {
+					mybtnclick();
+				}
+			}
+			else {
+
+				$('#question').attr("src", "www/img/wrong-red.png");
+				$('#question').attr('class', "answer show");
+				if (i < 9) {
+					SigShape = setTimeout(siguienteShape, 2000);
+				}
+				else {
+					mybtnclick();
+
+				}
+			}
+		}
+
+		function siguienteShape() {
+
+			i++;
+			$('#dropzone-rectangle').css("background-image", "url('" + shape[i].iconShape + "')");
+			$('#question').attr('class', "answer hide");
+
+		}
+
+		$('#next').click(function () {
+
+		})
+
+
+		function sumariten() {
+			score.innerHTML = parseInt(score.innerHTML) + 1;
+			Modelscore.innerHTML = parseInt(Modelscore.innerHTML) + 1;
+		}
+
+		var start = function (e) {
+			e.dataTransfer.effectAllowed = 'move';
+			e.dataTransfer.setData('iconId', e.target.id);
+			e.dataTransfer.setDragImage(e.target, 0, 0);
+			return true;
+		}
+		var shape = [
+			{ name: "rectangle", iconShape: "www/img/rectangle-bg.png", inconBackShape: "www/img/rectangle.png" },
+			{ name: "square", iconShape: "www/img/square-bg.png", inconBackShape: "www/img/square.png" },
+			{ name: "triangle", iconShape: "www/img/triangle-bg.png", inconBackShape: "www/img/triangle.png" },
+			{ name: "hexagon", iconShape: "www/img/hexagon-bg.png", inconBackShape: "www/img/hexagon.png" },
+			{ name: "star", iconShape: "www/img/star-bg.png", inconBackShape: "www/img/star.png" },
+			{ name: "circle", iconShape: "www/img/circle-bg.png", inconBackShape: "www/img/circle.png" },
+			{ name: "diamond", iconShape: "www/img/diamond-bg.png", inconBackShape: "www/img/diamond.png" },
+			{ name: "pentagon", iconShape: "www/img/pentagon-bg.png", inconBackShape: "www/img/pentagon.png" },
+			{ name: "heart", iconShape: "www/img/heart-bg.png", inconBackShape: "www/img/heart.png" },
+			{ name: "oval", iconShape: "www/img/oval-bg.png", inconBackShape: "www/img/oval.png" }
+		];
+		var enter = function (e) {
+			return true;
+		}
+		function vibrar() {
+			navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+			if (navigator.vibrate) {
+				navigator.vibrate(1000);
+			} else {
+				alert('Tu navegador no soporta la api de vibración HTML5');
+			}
+
+		}
+	</script>
+</body>
+
+</html>

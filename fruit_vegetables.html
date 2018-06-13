@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<meta name="author" content="Paola Martinez Bautista">
+	<meta name="description" content="Choose fruit and vegetable kids challenge!">
+	<meta name="keywords" content="Choose fruit and vegetable, kids challenge, JavaScript, CSS3, HTML5">
+
+	<title>Fruit and vegetable Kids Challenge!</title>
+	<link rel="stylesheet" href="www/fruit_vegetables.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="row">
+		<div class="col-full instructions">
+			<h1> Choose the correct fruit or vegetable </h1>
+			<h2>Your score is
+				<span id="score">0</span>/10</h2>
+		</div>
+	</div>
+
+	<div class="row">
+		<div id="dropzone-holder" class="col-half ">
+			<div class="col-quarter hitbox">
+				<img id="question" class="answer hide" src="www/img/correct-green.png" />
+				<div id="dropzone-apple" class="dropzone" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop(event)">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-half hitbox">
+			<div id="dropzone-container" class="dropzone container" ondragenter="return enter(event)" ondragover="return over(event)"
+			 ondrop="return drop(event)">
+				<img id="icon-apple" onclick="imgClic('icon-apple','apple')" class="icon" src="www/img/apple.png">
+				<img id="icon-bananas" class="icon" onclick="imgClic('icon-bananas','bananas')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/bananas.png">
+				<img id="icon-carrot" class="icon" onclick="imgClic('icon-carrot','carrot')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/carrot.png">
+				<img id="icon-cherries" class="icon" onclick="imgClic('icon-cherries','cherries')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/cherries.png">
+				<img id="icon-grapes" class="icon" onclick="imgClic('icon-grapes','grapes')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/grapes.png">
+				<img id="icon-lemon" class="icon" onclick="imgClic('icon-lemon' ,'lemon')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/lemon.png">
+				<img id="icon-pear" class="icon" onclick="imgClic('icon-pear','pear')" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/pear.png">
+				<img id="icon-strawberry" onclick="imgClic('icon-strawberry','strawberry')" class="icon" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/strawberry.png">
+				<img id="icon-tomato" onclick="imgClic('icon-tomato','tomato')" class="icon" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/tomato.png">
+				<img id="icon-watermelon" onclick="imgClic('icon-watermelon','watermelon')" class="icon" draggable="true" ondragstart="return start(event)"
+				 ondragend="return end(event)" src="www/img/watermelon.png">
+
+			</div>
+		</div>
+	</div>
+
+	<!-- The Modal -->
+
+	<div id="myModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h2 style="text-align:center">Game Over!</h2>
+
+			<h3 style="text-align:center">Your score is
+				<span id="Modelscore">0</span>/10.
+			</h3>
+
+			<a href="index.html">
+				<input type="submit" id="btnHome" value="Home" />
+			</a>
+
+			<a href="fruit_vegetables.html">
+				<input type="submit" id="btnrefresh" value="Play again" />
+			</a>
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+		var i = 0;
+		var score = document.getElementById('score');
+		var Modelscore = document.getElementById('Modelscore');
+		var modal = document.getElementById('myModal');
+		var btn = document.getElementById("myBtn");
+
+		var span = document.getElementsByClassName("close")[0];
+		function mybtnclick() {
+			modal.style.display = "block";
+		}
+
+		span.onclick = function () {
+			modal.style.display = "none";
+		}
+
+		window.onclick = function (event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+
+		$(document).ready(function () {
+			$('#next').click(function () {
+				$('#dropzone-apple').css("background-image", "url('" + frutas[i].iconfruit + "')");
+			})
+		});
+
+		function imgClic(id, nombre) {
+
+			if (nombre == frutas[i].name) {
+				$('#dropzone-apple').css("background-image", "url('" + frutas[i].inconBackFruit + "')");
+				$('#question').attr("src", "www/img/correct-green.png");
+				$('#question').attr('class', "answer show");
+				$('#' + id).attr('class', "icon answer hide");
+				vibrar();
+				sumariten();
+				if (i < 9) {
+					SigFruta = setTimeout(siguientefruta, 2000);
+				}
+				else {
+					mybtnclick();
+				}
+			}
+			else {
+
+				$('#question').attr("src", "www/img/wrong-red.png");
+				$('#question').attr('class', "answer show");
+				if (i < 9) {
+					SigFruta = setTimeout(siguientefruta, 2000);
+				}
+				else {
+					mybtnclick();
+				}
+			}
+		}
+
+		function siguientefruta() {
+
+			i++;
+			$('#dropzone-apple').css("background-image", "url('" + frutas[i].iconfruit + "')");
+			$('#question').attr('class', "answer hide");
+
+		}
+
+		$('#next').click(function () {
+
+		})
+
+
+		function sumariten() {
+			score.innerHTML = parseInt(score.innerHTML) + 1;
+			Modelscore.innerHTML = parseInt(Modelscore.innerHTML) + 1;
+		}
+
+		var start = function (e) {
+			e.dataTransfer.effectAllowed = 'move';
+			e.dataTransfer.setData('iconId', e.target.id);
+			e.dataTransfer.setDragImage(e.target, 0, 0);
+			return true;
+		}
+		var frutas = [
+			{ name: "apple", iconfruit: "www/img/apple-bg.png", inconBackFruit: "www/img/apple.png" },
+			{ name: "bananas", iconfruit: "www/img/bananas-bg.png", inconBackFruit: "www/img/bananas.png" },
+			{ name: "carrot", iconfruit: "www/img/carrot-bg.png", inconBackFruit: "www/img/carrot.png" },
+			{ name: "strawberry", iconfruit: "www/img/strawberry-bg.png", inconBackFruit: "www/img/strawberry.png" },
+			{ name: "pear", iconfruit: "www/img/pear-bg.png", inconBackFruit: "www/img/pear.png" },
+			{ name: "lemon", iconfruit: "www/img/lemon-bg.png", inconBackFruit: "www/img/lemon.png" },
+			{ name: "tomato", iconfruit: "www/img/tomato-bg.png", inconBackFruit: "www/img/tomato.png" },
+			{ name: "watermelon", iconfruit: "www/img/watermelon-bg.png", inconBackFruit: "www/img/watermelon.png" },
+			{ name: "cherries", iconfruit: "www/img/cherries-bg.png", inconBackFruit: "www/img/cherries.png" },
+			{ name: "grapes", iconfruit: "www/img/grapes-bg.png", inconBackFruit: "www/img/grapes.png" }
+		];
+		var enter = function (e) {
+			return true;
+		}
+		function vibrar() {
+			navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+			if (navigator.vibrate) {
+				navigator.vibrate(1000);
+			} else {
+				alert('Tu navegador no soporta la api de vibración HTML5');
+			}
+
+		}
+	</script>
+</body>
+
+</html>
